@@ -32,7 +32,9 @@ app.use('/', express.static(__dirname + '/public'));
  * API routes
  */
 const booksRoutes = require('./server/routes/books')(app, express);
+const authorsRoutes = require('./server/routes/authors')(app, express);
 app.use(apiBaseRoute, booksRoutes);
+app.use(apiBaseRoute, authorsRoutes);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 9000;

@@ -1,29 +1,27 @@
 const db = require('../models');
 
-const Books = db.books;
+const Authors = db.authors;
 const Op = db.Sequelize.Op;
 
 exports.create = async (req, res) => {
   const {
-    title,
-    description,
-    published = false,
+    firstname,
+    lastname,
   } = req.body;
   // Validate request
-  if (!title) {
+  if (!firstname || !lastname) {
     return res.status(400).send({
-      message: 'You must pass a title at least!'
+      message: 'You must pass a firstname and lastname!'
     });
   }
 
   // Create a book
-  const book = {
-    title,
-    description,
-    published
+  const author = {
+    firstname,
+    lastname,
   };
   try {
-    const data = await Books.create(book);
+    const data = await Authors.create(author);
     return res.json(data);
   } catch (error) {
     return res.status(500).send(error.message);
@@ -32,15 +30,15 @@ exports.create = async (req, res) => {
 }
 
 exports.findAll = async (req, res) => {
-  const title = req.query.title;
-  const condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+  const lastname = req.query.lastname;
+  const condition = lastname ? { lastname: { [Op.like]: `%${lastname}%` } } : null;
 
   try {
-    const data = await Books.findAll({ where: condition });
+    const data = await Authors.findAll({ where: condition });
     return res.json(data);
   } catch (error) {
     return res.status(500).send({
-      message: error.message || 'Some error occurred while retrieving books.'
+      message: error.message || 'Some error occurred while retrieving authors.'
     });
   }
 }
@@ -49,24 +47,23 @@ exports.findOne = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const data = await Books.findByPk(id)
+    const data = await Authors.findByPk(id)
     return res.json(data);
   } catch (error) {
     return res.status(500).send({
-      message: error.message || 'Some error occurred while retrieving books.'
+      message: error.message || 'Some error occurred while retrieving authors.'
     });
   }
 }
 
 exports.update = async (req, res) => {
   const { id } = req.params;
-  const { title, description, published } = req.body;
+  const { firstname, lastname } = req.body;
 
   try {
-    const num = await Books.update({
-      title,
-      description,
-      published,
+    const num = await Authors.update({
+      firstname,
+      lastname
     },
     {
       where: {
@@ -75,15 +72,15 @@ exports.update = async (req, res) => {
     });
     if (num == 1) {
       return res.send({
-        message: 'Book updated successfully'
+        message: 'Author updated successfully'
       })
     }
     return res.status(400).send({
-      message: `Something went wrong, cannot update the book id ${id}`
+      message: `Something went wrong, cannot update the author id ${id}`
     })
   } catch (error) {
     return res.status(500).send({
-      message: error.message || `Some error occurred while updating the book (id=${id}).`
+      message: error.message || `Some error occurred while updating the author (id=${id}).`
     });
   }
 }
@@ -92,22 +89,22 @@ exports.delete = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const num = await Books.destroy({
+    const num = await Authors.destroy({
       where: {
         id
       }
     });
     if (num == 1) {
       return res.send({
-        message: 'Book deleted successfully'
+        message: 'Author deleted successfully'
       })
     }
     return res.status(400).send({
-      message: `Something went wrong, cannot delete the book id ${id}`
+      message: `Something went wrong, cannot delete the author id ${id}`
     })
   } catch (error) {
     return res.status(500).send({
-      message: error.message || `Some error occurred while deleting the book (id=${id}).`
+      message: error.message || `Some error occurred while deleting the author (id=${id}).`
     });
   }
 }
