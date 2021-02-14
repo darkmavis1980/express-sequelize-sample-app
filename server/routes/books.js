@@ -8,9 +8,9 @@ module.exports = (app, express) => {
 
   router.get('/books/', BooksCtrl.findAll);
   router.post('/books/', BooksCtrl.create);
-  router.get('/books/:book_id', BooksCtrl.findOne);
-  router.patch('/books/:book_id', BooksCtrl.update);
-  router.delete('/books/:book_id', BooksCtrl.delete);
+  router.get('/books/:id', BooksCtrl.findOne);
+  router.patch('/books/:id', BooksCtrl.update);
+  router.delete('/books/:id', BooksCtrl.delete);
 
   return router;
 };
