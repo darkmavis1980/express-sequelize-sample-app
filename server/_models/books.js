@@ -13,7 +13,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.BOOLEAN
     },
     author_id: {
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
     }
   });
 

@@ -1,8 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const db = require("./server/models");
-const books = require('./server/models/books');
+const db = require("./server/_models");
+const books = require('./server/_models/books');
 
 const app = express();
 

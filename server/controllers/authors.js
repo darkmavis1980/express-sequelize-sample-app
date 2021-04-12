@@ -1,4 +1,4 @@
-const db = require('../models');
+const db = require('../_models');
 
 const Authors = db.authors;
 const Op = db.Sequelize.Op;
